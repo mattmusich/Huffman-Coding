@@ -14,16 +14,22 @@ public class Encode {
             FileReader sourceReader = new FileReader(sourceFile);
 
             BufferedReader sourceBufferReader = new BufferedReader(sourceReader);
+
+            while((line = sourceBufferReader.readLine()) != null) {
+                System.out.println(line);
+            }
         }
         catch(FileNotFoundException ex) {
-            System.out.println("File: " + sourceFile + "Not Found");
+            System.out.println("Error: File " + sourceFile + "Not Found");
         }
-
+        catch(IOException ex) {
+            System.out.println("Error: File " + sourceFile + "Cannot be Read");
+        }
 
 
     }
 
-
+    public 
 
 
 
