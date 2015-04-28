@@ -19,4 +19,12 @@ public class TreeNode {
 
     }
 
+    public TreeNode getLeft(){
+        return this.nodeChildren.get(0);
+    }
+
+    public TreeNode getRight(){
+        return this.nodeChildren.get(1);
+    }
+
 }
