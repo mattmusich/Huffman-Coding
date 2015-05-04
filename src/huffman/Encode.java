@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 public class Encode {
 
@@ -20,13 +21,19 @@ public class Encode {
             System.out.println(key +":"+ charFreqs.get(key));
         }
 
+        Tree initialHuff = new Tree();
+        initialHuff = createHuffTree(charFreqs,initialHuff);
+
+
     }
 
     public static Map<String,Integer> checkCharFreq(String sourceFile){
 
+        PriorityQueue<TreeNode> treeNodes = new PriorityQueue<TreeNode>();
+
         Map<String,Integer> charCount = new HashMap<String,Integer>();
-        int sourceChar;
-        String line = null;
+
+        
         int r;
 
         try {
@@ -36,9 +43,9 @@ public class Encode {
             while((r = sourceBufferReader.read()) != -1){
                 char c = (char)r;
                 String cString;
-                if(c == '\n') {
+                if(c == '\n'){
                     cString = "\n";
-                } else if(c == '\r') {
+                } else if (c == '\r'){
                     cString = "\r";
                 } else {
                     cString = Character.toString(c);
@@ -58,7 +65,6 @@ public class Encode {
     }
 
     public static Map<String,Integer> addChar(Map<String,Integer> tempMap, String ch) {
-
         if (ch != null) {
             if (ch == "\n") {
                 tempMap.put("/n", tempMap.getOrDefault("/n", 0) + 1);
@@ -70,6 +76,20 @@ public class Encode {
         }
         return tempMap;
     }
+
+    public static Tree createHuffTree(Map<String,Integer> charFreqs, Tree initialHuff){
+
+
+        return initialHuff;
+    }
+
+    public
+
+
+
+
+
+
 
 }
 

@@ -1,16 +1,12 @@
 package huffman;
 
-
 public class Tree {
 
     public TreeNode root = null;
     public TreeNode current = null;
-    //public TreeNode goal = null;
     public String result = "";
 
     public Tree(){
-        //goal = new TreeNode("goal");
-        //current = goal;
         root = null;
         current = null;
     }
