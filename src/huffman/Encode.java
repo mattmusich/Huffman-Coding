@@ -1,39 +1,50 @@
 package huffman;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Encode {
 
-    public static String newline = System.getProperty("line.separator");
 
     public static void main(String[] args) {
 
         String sourceFile = args[0];
         sourceFile = sourceFile.replace("\r","").replace("\n","");
 
-        Map<String,Integer> charFreqs = checkCharFreq(sourceFile);
+        Map<Integer,Integer> charFreqs = checkCharFreq(sourceFile);
+        PriorityQueue<CharNode> pr = new PriorityQueue<CharNode>();
 
-        for(String key : charFreqs.keySet()){
-            System.out.println(key +":"+ charFreqs.get(key));
+
+        for(Integer key : charFreqs.keySet()){
+            int i = key;
+            char c = (char)i;
+            System.out.println(key +":"+ charFreqs.get(key) + " =" + c );
+            pr.add(new CharNode(key,charFreqs.get(key),true));
+
         }
 
-        Tree initialHuff = new Tree();
-        initialHuff = createHuffTree(charFreqs,initialHuff);
+
+        CharNode head = buildHuffTree(pr);
+        System.out.println("Printing tree:\n");
+        head.printNodes(head,"-");
 
 
-    }
+        //head.getDepth(head,"-",0);
+        //freq length binary
+        //Map<Integer,KeyTable> table = new HashMap<Integer, KeyTable>();
+        //get the lengths from the print code same w/ binary
 
-    public static Map<String,Integer> checkCharFreq(String sourceFile){
 
-        PriorityQueue<TreeNode> treeNodes = new PriorityQueue<TreeNode>();
 
-        Map<String,Integer> charCount = new HashMap<String,Integer>();
+}
 
-        
+    public static Map<Integer,Integer> checkCharFreq(String sourceFile){
+
+        Map<Integer,Integer> charCount = new HashMap<Integer,Integer>();
+        int sourceChar;
+        String line = null;
         int r;
 
         try {
@@ -42,14 +53,8 @@ public class Encode {
 
             while((r = sourceBufferReader.read()) != -1){
                 char c = (char)r;
-                String cString;
-                if(c == '\n'){
-                    cString = "\n";
-                } else if (c == '\r'){
-                    cString = "\r";
-                } else {
-                    cString = Character.toString(c);
-                }
+                int cString;
+                cString = c;
                 charCount = addChar(charCount,cString);
             }
 
@@ -61,30 +66,37 @@ public class Encode {
             System.out.println("Error: File " + sourceFile + "Cannot be Read");
         }
 
-    return charCount;
+        charCount.put(26,1);
+        return charCount;
     }
 
-    public static Map<String,Integer> addChar(Map<String,Integer> tempMap, String ch) {
+
+    public static Map<Integer,Integer> addChar(Map<Integer,Integer> tempMap, Integer ch) {
         if (ch != null) {
-            if (ch == "\n") {
-                tempMap.put("/n", tempMap.getOrDefault("/n", 0) + 1);
-            } else if (ch == "\r") {
-                tempMap.put("/r", tempMap.getOrDefault("/r", 0) + 1);
-            } else {
-                tempMap.put(ch, tempMap.getOrDefault(ch, 0) + 1);
-            }
+            tempMap.put(ch, tempMap.getOrDefault(ch, 0) + 1);
         }
         return tempMap;
     }
 
-    public static Tree createHuffTree(Map<String,Integer> charFreqs, Tree initialHuff){
+    public static CharNode buildHuffTree(PriorityQueue<CharNode> pr){
 
+        int size = pr.size();
+        CharNode root = null;
 
-        return initialHuff;
+        for (int i = 0; i < size-1; i++){
+            CharNode l = pr.poll();
+            CharNode r = pr.poll();
+            CharNode m = new CharNode(0,l.freq + r.freq,false);
+            m.right = l;
+            m.left = r;
+            l.parent = m;
+            r.parent = m;
+            pr.add(m);
+            root = m;
+        }
+
+        return root;
     }
-
-    public
-
 
 
 
