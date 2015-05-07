@@ -1,5 +1,6 @@
 package huffman;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,12 +8,15 @@ public class CharNode implements Comparable<CharNode> {
 
     public int ch;
     public int freq;
+    public String name ="";
+    public int depth;
     public boolean isLeaf;
     public CharNode left;
     public CharNode right;
     public CharNode parent;
 
-    public CharNode(int ch,int freq, boolean isLeaf){
+    public CharNode(int ch,int freq,String name, boolean isLeaf){
+        this.name = name;
         this.ch = ch;
         this.freq = freq;
         this.isLeaf = isLeaf;
@@ -26,7 +30,8 @@ public class CharNode implements Comparable<CharNode> {
     public void printNodes(CharNode n, String dashes) {
         // print with colon if leaf node
         if (Integer.toString(n.ch) != "") {
-            System.out.println(dashes + Integer.toString(n.ch) + ":" +  n.freq);
+            n.depth = dashes.length()-1;
+            System.out.println(dashes + n.name + ":" +  n.freq + " Depth:" + n.depth);
         }
         else {
             System.out.println(dashes + n.freq);
@@ -41,28 +46,7 @@ public class CharNode implements Comparable<CharNode> {
         }
     }
 
-    public void getDepth(CharNode n, String dashes, int count) {
-        Map<Integer,KeyTable> table = new HashMap<Integer, KeyTable>();
-
-        // print with colon if leaf node
-        if (Integer.toString(n.ch) != "") {
-            table.put(n.ch, new KeyTable(n.freq, count, 0 ));
-            System.out.println(n.ch + ":" + table.get(n.ch).toString());
-        }
-        else {
-            System.out.println(dashes + n.freq);
-        }
-
-        // Start recursive on left child then right
-        if (n.left != null) {
-            getDepth(n.left, dashes + "-", count++);
-        }
-        if (n.right != null) {
-            getDepth(n.right, dashes + "-", count++);
-        }
-
-
-    }
+    
 
 
 }

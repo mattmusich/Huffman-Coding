@@ -16,29 +16,29 @@ public class Encode {
         Map<Integer,Integer> charFreqs = checkCharFreq(sourceFile);
         PriorityQueue<CharNode> pr = new PriorityQueue<CharNode>();
 
+        //sets up the priority queue
+        for(Integer key : charFreqs.keySet()){
+            int i = key;
+            char c = (char)i;
+            System.out.println(key +":"+ charFreqs.get(key) + " =" + c );
+            pr.add(new CharNode(key, charFreqs.get(key),String.valueOf(c) , true));
+        }
+
+        //builds the tree from the PRQUEUE and prints
+        CharNode head = buildHuffTree(pr);
+        System.out.println("Printing tree:\n");
+        head.printNodes(head,"-");
 
         for(Integer key : charFreqs.keySet()){
             int i = key;
             char c = (char)i;
             System.out.println(key +":"+ charFreqs.get(key) + " =" + c );
-            pr.add(new CharNode(key,charFreqs.get(key),true));
-
+            pr.add(new CharNode(key, charFreqs.get(key), String.valueOf(c) ,true));
         }
 
 
-        CharNode head = buildHuffTree(pr);
-        System.out.println("Printing tree:\n");
-        head.printNodes(head,"-");
 
-
-        //head.getDepth(head,"-",0);
-        //freq length binary
-        //Map<Integer,KeyTable> table = new HashMap<Integer, KeyTable>();
-        //get the lengths from the print code same w/ binary
-
-
-
-}
+    }
 
     public static Map<Integer,Integer> checkCharFreq(String sourceFile){
 
@@ -66,7 +66,7 @@ public class Encode {
             System.out.println("Error: File " + sourceFile + "Cannot be Read");
         }
 
-        charCount.put(26,1);
+        charCount.put(0,1);
         return charCount;
     }
 
@@ -86,7 +86,7 @@ public class Encode {
         for (int i = 0; i < size-1; i++){
             CharNode l = pr.poll();
             CharNode r = pr.poll();
-            CharNode m = new CharNode(0,l.freq + r.freq,false);
+            CharNode m = new CharNode(0,l.freq + r.freq,l.name + r.name,false);
             m.right = l;
             m.left = r;
             l.parent = m;
@@ -98,7 +98,10 @@ public class Encode {
         return root;
     }
 
-
+//    public static CharNode bld(){
+//
+//
+//    }
 
 
 
