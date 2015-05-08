@@ -6,6 +6,7 @@ public class KeyTable implements Comparable<KeyTable>{
     public int depth;
     public int binary;
     public String code;
+    public byte[] data;
 
     public KeyTable(int ch, int depth){
         this.ch = ch;
