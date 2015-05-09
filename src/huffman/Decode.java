@@ -28,9 +28,9 @@ public class Decode {
         /*Reads the binary.huf*/
         try {
             DataInputStream inputStream = new DataInputStream(new FileInputStream(hufFile));
-                //byte[] buffer = new byte[100000];
-                //int total = 0;
-                //byte nRead;
+            byte[] buffer = new byte[100000];
+            int total = 0;
+            byte nRead;
             /* init the values that will control the bytes*/
             int test = 0;
             int x = 0;

@@ -82,7 +82,6 @@ public class Encode {
         /*creates the header string*/
         byte[] header = encodeHeader(codedTable);
 
-
         /*creates the Hash for content encode*/
         HashMap<Integer,String> codeHash = new HashMap<Integer,String>();
         int ctSize = codedTable2.size();
@@ -97,10 +96,10 @@ public class Encode {
 
 
         String targetFile = args[1];
-        //writeContent(sourceFile,targetFile,codeHash);
         writeHuf(header, content ,targetFile);
 
-            //System.out.println("K goal"+leaves.size());
+        //writeContent(sourceFile,targetFile,codeHash);
+
 
         /*End of Main*/
         }
@@ -318,52 +317,6 @@ public class Encode {
 
         return con;
     }
-
-//    public static void writeContent(String sourceFile,String targetFile,HashMap<Integer,String> codeHash){
-//        System.out.println("STARTING ENCODE");
-//        String content = "";
-//        int r;
-//        try {
-//            FileReader sourceReader = new FileReader(sourceFile);
-//            BufferedReader sourceBufferReader = new BufferedReader(sourceReader);
-//            while((r = sourceBufferReader.read()) != -1){
-//                content += codeHash.get(r);
-//            }
-//        }
-//        catch(FileNotFoundException ex) {
-//            System.out.println("Error: File " + sourceFile + "Not Found");
-//        }
-//        catch(IOException ex) {
-//            System.out.println("Error: File " + sourceFile + "Cannot be Read");
-//        }
-//        content += codeHash.get(0); //add EOF
-
-//        /*adds 0s to the end to make divisible by 8 makes sure no straggle bits*/
-//        int remain = content.length() % 8;
-//        for(int i = 0; i < 8 - remain; i++){
-//            content += "0";
-//        }
-
-//        String[] byteStrings = new String[(content.length()) / 8];
-//        byte[] con = new byte[(content.length()) / 8];
-
-//        /*create an array of bytes*/
-//        int len = content.length();
-//        int j = 0;
-//        for (int i=0; i < len; i+=8){
-//            byteStrings[j] = content.substring(i, Math.min(len, i + 8));
-//            //con[j] = (byte) Integer.parseInt(content.substring(i, Math.min(len, i + 8)), 2);;
-//            j++;
-//        }
-
-//        for (int i = 0; i < byteStrings.length; i++){
-//            //String s  = byteStrings[i];
-//            con[i] = (byte) Integer.parseInt(byteStrings[i], 2);
-//            byte t = (byte) Integer.parseInt(byteStrings[i], 2);
-//        }
-
-
-//    }
 
 
     /**
