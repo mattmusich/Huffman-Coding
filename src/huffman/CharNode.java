@@ -8,7 +8,7 @@ public class CharNode implements Comparable<CharNode> {
 
     public int ch;
     public int freq;
-    public String name = "";
+    public String name = ""; //can be the binary code in some places
     public int depth;
     public boolean isLeaf;
     public CharNode left;
@@ -20,6 +20,12 @@ public class CharNode implements Comparable<CharNode> {
         this.ch = ch;
         this.freq = freq;
         this.isLeaf = isLeaf;
+    }
+
+    public KeyTable toKeyTable(){
+        KeyTable build = new KeyTable(this.ch,this.depth);
+        build.code = this.name;
+        return build;
     }
 
     @Override

@@ -17,6 +17,11 @@ public class KeyTable implements Comparable<KeyTable>{
         return Integer.toString(ch) + ":" + Integer.toString(depth) + ":" + Integer.toString(binary) + ":"+ code;
     }
 
+    public CharNode toCharNode(){
+        CharNode build = new CharNode(this.ch,0,this.code,true);
+        return build;
+    }
+
     @Override
     public int compareTo(KeyTable i) {
         int thisdepth = this.depth;

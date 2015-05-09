@@ -84,6 +84,7 @@ public class Encode {
         String targetFile = args[1];
         writeHuf(header, content ,targetFile);
 
+        System.out.println("K goal"+leaves.size());
 
             //End of Main
         }
@@ -91,8 +92,8 @@ public class Encode {
     public static Map<Integer,Integer> checkCharFreq(String sourceFile){
 
         Map<Integer,Integer> charCount = new HashMap<Integer,Integer>();
-        int sourceChar;
-        String line = null;
+        //int sourceChar;
+        //String line = null;
         int r;
 
         try {
@@ -174,11 +175,12 @@ public class Encode {
                 code = code / 2; //right shift
             }
             sCode = String.format("%" + Integer.toString(current.depth) + "s", Integer.toBinaryString(code)).replace(' ', '0');
-            System.out.println(current.ch + ":" + current.depth + ":" +sCode);
+            //System.out.println(current.ch + ":" + current.depth + ":" +sCode);
             current.code = sCode;
             pastDepth = current.depth;
             current.data = sCode.getBytes();
             btable.add(current);
+            System.out.println(current.ch + ":" + current.depth + ":" +current.code);
         }
         return btable;
     }
@@ -221,7 +223,7 @@ public class Encode {
         }
         content += codeHash.get(0); //add EOF
 
-        System.out.println(content);
+        //System.out.println(content);
 
         //adds 0s to the end to make divisible by 8
         int remain = content.length() % 8;
