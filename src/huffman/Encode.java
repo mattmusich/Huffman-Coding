@@ -4,6 +4,7 @@ import com.intellij.openapi.vcs.history.VcsRevisionNumber;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Encode {
@@ -64,7 +65,7 @@ public class Encode {
 
 
         //creates the header string
-        String header = encodeHeader(codedTable);
+        byte[] header = encodeHeader(codedTable);
 
 
         //creates the Hash for content encode
@@ -77,11 +78,11 @@ public class Encode {
         }
 
         //creates the content String
-        String content = encodeContent(sourceFile,codeHash);
-        String outBinary = header + content;
+        byte[] content = encodeContent(sourceFile,codeHash);
+
 
         String targetFile = args[1];
-        writeHuf(outBinary,targetFile);
+        writeHuf(header, content ,targetFile);
 
 
             //End of Main
@@ -182,31 +183,27 @@ public class Encode {
         return btable;
     }
 
-    public static ArrayList<byte[]> encodeHeader(PriorityQueue<KeyTable> codedTable){
-
-        ArrayList<byte[]> header = new ArrayList<byte[]>();
+    public static byte[] encodeHeader(PriorityQueue<KeyTable> codedTable){
 
         int ctSize = codedTable.size();
+        byte[] header = new byte[(ctSize *2)+1];
         int bitLength = 8;
         //header += String.format("%" + bitLength + "s", Integer.toBinaryString(ctSize)).replace(' ', '0');
 
-        byte[] count = new byte[bitLength];
-        count = Integer.toBinaryString(ctSize).getBytes();
-
+        byte count = (byte)ctSize;
+        header[0] = count;
+        int j = 1;
         for (int i=0; i < ctSize; i++) {
             KeyTable curr = codedTable.poll();
-            byte[] tempB = new byte[curr.data.length];
-            tempB = curr.data;
-            header.add(tempB);
-           // String bitChar = String.format("%" + bitLength + "s", Integer.toBinaryString(curr.ch)).replace(' ', '0');
-           // String bitDepth = String.format("%" + bitLength + "s", Integer.toBinaryString(curr.depth)).replace(' ', '0');
-           // header += bitChar + bitDepth;
+            header[j] = (byte)curr.ch;
+            header[j+1] = (byte)curr.depth;
+           j += 2;
         }
         return header;
     }
 
 
-    public static String encodeContent(String sourceFile,HashMap<Integer,String> codeHash){
+    public static byte[] encodeContent(String sourceFile,HashMap<Integer,String> codeHash){
         String content = "";
         int r;
         try {
@@ -223,36 +220,56 @@ public class Encode {
             System.out.println("Error: File " + sourceFile + "Cannot be Read");
         }
         content += codeHash.get(0); //add EOF
-        return content;
+
+        System.out.println(content);
+
+        //adds 0s to the end to make divisible by 8
+        int remain = content.length() % 8;
+        for(int i = 0; i < 8 - remain; i++){
+            content += "0";
+        }
+
+       // System.out.println(content);
+
+        String[] byteStrings = new String[(content.length()) / 8];
+        byte[] con = new byte[(content.length()) / 8];
+
+        //create an array of bytes
+        int len = content.length();
+        int j = 0;
+        for (int i=0; i < len; i+=8){
+            byteStrings[j] = content.substring(i, Math.min(len, i + 8));
+            //con[j] = (byte) Integer.parseInt(content.substring(i, Math.min(len, i + 8)), 2);;
+            j++;
+        }
+
+        //System.out.println(Arrays.toString(byteStrings));
+
+        for (int i = 0; i < byteStrings.length; i++){
+            //String s  = byteStrings[i];
+            con[i] = (byte) Integer.parseInt(byteStrings[i], 2);
+        }
+
+        //System.out.println(Arrays.toString(con));
+
+
+        return con;
     }
 
-    public static void writeHuf(String outBinary,String targetFile){
+    public static void writeHuf(byte[] header, byte[] content,String targetFile){
         try {
-            // Put some bytes in a buffer so we can
-            // write them. Usually this would be
-            // image data or something. Or it might
-            // be unicode text.
-            byte[] buffer = outBinary.getBytes();
 
             FileOutputStream outputStream = new FileOutputStream(targetFile);
 
-            // write() writes as many bytes from the buffer
-            // as the length of the buffer. You can also
-            // use
-            // write(buffer, offset, length)
-            // if you want to write a specific number of
-            // bytes, or only part of the buffer.
-            outputStream.write(buffer);
+            outputStream.write(header);
+            outputStream.write(content);
 
-            // Always close files.
             outputStream.close();
 
-            System.out.println("Wrote " + buffer.length +" bytes");
+            System.out.println("Wrote " + (header.length + content.length) + " bytes");
         }
         catch(IOException ex) {
             System.out.println("Error writing file '"+ targetFile + "'");
-            // Or we could just do this:
-            // ex.printStackTrace();
         }
 
     }
