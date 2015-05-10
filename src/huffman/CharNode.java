@@ -84,7 +84,7 @@ public class CharNode implements Comparable<CharNode> {
         /* print with colon if leaf node*/
         if (Integer.toString(n.ch) != "") {
             n.depth = dashes.length()-1;
-           // System.out.println(dashes + n.name + ":" +  n.freq + " Depth:" + n.depth);
+            //System.out.println(dashes + n.name + ":" +  n.freq + " Depth:" + n.depth);
         }
         else {
            // System.out.println(dashes + n.freq);

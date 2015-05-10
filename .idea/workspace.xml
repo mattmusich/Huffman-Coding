@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/huffman/Encode.java" description="/* @@@@@@@@@@@End of Main@@@@@@@@@@@@@@@@@ */" line="76" />
+    <bookmark url="file://$PROJECT_DIR$/src/huffman/Encode.java" description="public static void encodeContent(String sourceFile..." line="212" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="fbf2ed76-0978-4663-a2c1-eaace8490b2b" name="Default" comment="" />
     <ignored path="huffman.iws" />
@@ -25,15 +29,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Encode.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Encode.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/huffman/Encode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.1762295" vertical-offset="4817" max-vertical-offset="6001">
-              <caret line="334" column="40" selection-start-line="334" selection-start-column="40" selection-end-line="334" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="3927" max-vertical-offset="5406">
+              <caret line="266" column="42" selection-start-line="266" selection-start-column="42" selection-end-line="266" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3396#3412#0" expanded="true" />
-                <element signature="e#7346#7356#0" expanded="true" />
+                <element signature="e#1829#1839#0" expanded="true" />
+                <element signature="e#1906#1916#0" expanded="true" />
+                <element signature="e#2726#2742#0" expanded="true" />
+                <element signature="e#6555#6565#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -42,24 +48,23 @@
       <file leaf-file-name="Decode.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/huffman/Decode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="3604">
-              <caret line="59" column="49" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="49" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="3077">
+              <caret line="71" column="79" selection-start-line="71" selection-start-column="79" selection-end-line="71" selection-end-column="79" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#5570#5580#0" expanded="true" />
+                <element signature="e#5633#5643#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CharNode.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CharNode.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/huffman/CharNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="1887">
-              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-              <folding>
-                <element signature="e#1590#1591#0" expanded="true" />
-                <element signature="e#1630#1631#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.48907104" vertical-offset="1121" max-vertical-offset="1853">
+              <caret line="89" column="13" selection-start-line="89" selection-start-column="13" selection-end-line="89" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -89,8 +94,10 @@
         <option value="$PROJECT_DIR$/src/huffman/CharItem.java" />
         <option value="$PROJECT_DIR$/src/huffman/Encode2.java" />
         <option value="$PROJECT_DIR$/src/huffman/Table.java" />
-        <option value="$PROJECT_DIR$/src/huffman/CharNode.java" />
         <option value="$PROJECT_DIR$/src/huffman/KeyTable.java" />
+        <option value="$PROJECT_DIR$/src/huffman/CharNode.java" />
+        <option value="$PROJECT_DIR$/src/huffman/FUCK.java" />
+        <option value="$PROJECT_DIR$/src/huffman/SHIT.java" />
         <option value="$PROJECT_DIR$/src/huffman/Decode.java" />
         <option value="$PROJECT_DIR$/src/huffman/Encode.java" />
       </list>
@@ -98,7 +105,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
-    <option name="y" value="-7" />
+    <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1066" />
   </component>
@@ -443,7 +450,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-7" width="1936" height="1066" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -499,24 +506,26 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/huffman/Encode.java">
+    <entry file="file://$PROJECT_DIR$/src/huffman/OldEncode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5967">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3396#3412#0" expanded="true" />
-            <element signature="e#7346#7356#0" expanded="true" />
+            <element signature="e#3399#3415#0" expanded="true" />
+            <element signature="e#7349#7359#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/huffman/Decode.java">
+    <entry file="file://$PROJECT_DIR$/src/huffman/OldDecode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1852" max-vertical-offset="3604">
           <caret line="191" column="13" selection-start-line="191" selection-start-column="13" selection-end-line="191" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#6055#6065#0" expanded="true" />
+            <element signature="e#6118#6128#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -525,10 +534,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="1887">
           <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding>
-            <element signature="e#1590#1591#0" expanded="true" />
-            <element signature="e#1630#1631#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -540,24 +546,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/huffman/Encode.java">
+    <entry file="file://$PROJECT_DIR$/src/huffman/OldEncode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4556">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3396#3412#0" expanded="true" />
-            <element signature="e#7346#7356#0" expanded="true" />
+            <element signature="e#3399#3415#0" expanded="true" />
+            <element signature="e#7349#7359#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/huffman/Decode.java">
+    <entry file="file://$PROJECT_DIR$/src/huffman/OldDecode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="1292">
           <caret line="23" column="38" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#6055#6065#0" expanded="true" />
+            <element signature="e#6118#6128#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -566,10 +574,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="488" max-vertical-offset="1207">
           <caret line="52" column="51" selection-start-line="52" selection-start-column="51" selection-end-line="52" selection-end-column="51" />
-          <folding>
-            <element signature="e#1590#1591#0" expanded="true" />
-            <element signature="e#1630#1631#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -602,20 +607,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/production/huffman/test.txt">
+    <entry file="file://$PROJECT_DIR$/src/huffman/OldDecode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="614">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/huffman/CharNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1887">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.023224045" vertical-offset="170" max-vertical-offset="3604">
+          <caret line="11" column="23" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="23" />
           <folding>
-            <element signature="e#1590#1591#0" expanded="true" />
-            <element signature="e#1630#1631#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#6055#6065#0" expanded="true" />
+            <element signature="e#6118#6128#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -628,25 +627,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/huffman/Decode.java">
+    <entry file="file://$PROJECT_DIR$/src/huffman/OldEncode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="3604">
-          <caret line="59" column="49" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="49" />
+        <state vertical-scroll-proportion="0.2554645" vertical-offset="0" max-vertical-offset="6001">
+          <caret line="11" column="22" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3399#3415#0" expanded="true" />
+            <element signature="e#7349#7359#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/huffman/Decode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="3077">
+          <caret line="71" column="79" selection-start-line="71" selection-start-column="79" selection-end-line="71" selection-end-column="79" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5570#5580#0" expanded="true" />
+            <element signature="e#5633#5643#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/huffman/Encode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.1762295" vertical-offset="4817" max-vertical-offset="6001">
-          <caret line="334" column="40" selection-start-line="334" selection-start-column="40" selection-end-line="334" selection-end-column="40" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="3927" max-vertical-offset="5406">
+          <caret line="266" column="42" selection-start-line="266" selection-start-column="42" selection-end-line="266" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3396#3412#0" expanded="true" />
-            <element signature="e#7346#7356#0" expanded="true" />
+            <element signature="e#1829#1839#0" expanded="true" />
+            <element signature="e#1906#1916#0" expanded="true" />
+            <element signature="e#2726#2742#0" expanded="true" />
+            <element signature="e#6555#6565#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/huffman/CharNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.48907104" vertical-offset="1121" max-vertical-offset="1853">
+          <caret line="89" column="13" selection-start-line="89" selection-start-column="13" selection-end-line="89" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>

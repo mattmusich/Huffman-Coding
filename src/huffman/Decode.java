@@ -47,11 +47,11 @@ public class Decode {
             }
 
             /*Builds the sorted table needed for tree building*/
-                //System.out.println(k);
+            //System.out.println(k);
             for (Integer name: headerTable.keySet()){
                 String key = name.toString();
                 String value = headerTable.get(name).toString();
-                    //System.out.println(key + ":" + value);
+                //System.out.println(key + ":" + value);
                 sortedTable.add(new KeyTable(name,headerTable.get(name)));
             }
 
@@ -59,59 +59,54 @@ public class Decode {
             /*use sortedTable to do this*/
             codedTable = Encode.createBinaryCodes(sortedTable);
             CharNode conTree = buildconTree(codedTable);
-                //System.out.println("Printing tree:\n");
+            //System.out.println("Printing tree:\n");
             conTree.printNodes(conTree,"-");
 
             /*Setup for the content decode*/
-            String endcontent = "";
+            char endcontent;
             CharNode treeRoot = conTree;
             CharNode currentNode = conTree;
-            String remainder = "";
             /*loop though encoded content comp bits to tree*/
-            while(inputStream.available() > 0) {
+            try {
+                FileWriter fileWriter = new FileWriter(targetFile);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-                /*gets a byte converts to string in binary format converts to byte[]*/
-                test = inputStream.readByte();
-                    //System.out.println("BYTE:"+test);
-                String binary = String.format("%8s", Integer.toBinaryString(test & 0xFF)).replace(' ', '0');
-                    //System.out.println("B w/out:"+binary);
-                String binaryOverflow = binary ; //remainder + IS NOT NEEDED I was carrying the tree loc so i did not need it alongside
-                    //System.out.println("Bw/OVER:"+binaryOverflow);
-                char[] bits = binaryOverflow.toCharArray();
+                while(inputStream.available() > 0) {
 
-                for (int i = 0;i<binaryOverflow.length();i++){
-                    char currentBit = bits[i];
+                    /*gets a byte converts to string in binary format converts to byte[]*/
+                    test = inputStream.readByte();
+                    String binary = String.format("%8s", Integer.toBinaryString(test & 0xFF)).replace(' ', '0');
+                    String binaryOverflow = binary ; // (remainder +) IS NOT NEEDED I was carrying the tree loc so i did not need it alongside
+                    char[] bits = binaryOverflow.toCharArray();
 
-                    /* checks if it going to be left or right on the tree*/
-                        //System.out.println("C BIT:"+currentBit);
-                    if(currentBit == '0'){
-                      currentNode = currentNode.left;
-                    } else {
-                      currentNode = currentNode.right;
-                    }
+                    for (int i = 0;i<binaryOverflow.length();i++){
+                        char currentBit = bits[i];
 
-                    /* if it is a leaf it adds the char to a string other wise it carries the remainder chars*/
-                    if(currentNode.isLeaf){
-                            //System.out.println("LEAF:"+currentNode.ch);
-                        endcontent += (char) currentNode.ch;
-                            //System.out.println("ADD:"+(char) currentNode.ch);
-                        remainder = "";
-                        currentNode = treeRoot;
-                    } else {
-                            //System.out.println("BRANCH:"+currentBit);
-                        remainder += currentBit;
+                        /* checks if it going to be left or right on the tree*/
+                        if(currentBit == '0'){
+                            currentNode = currentNode.left;
+                        } else {
+                            currentNode = currentNode.right;
+                        }
+
+                        /* if it is a leaf it adds the char to a string other wise it carries the remainder chars*/
+                        if(currentNode.isLeaf){
+                            endcontent = (char) currentNode.ch;
+                            fileWriter.write(endcontent);
+                            currentNode = treeRoot;
+                        } else {}
                     }
 
                 }
 
-               // total += test;
+                bufferedWriter.close();
+            }
+            catch(IOException ex) {
+                System.out.println("Error writing file '"+ targetFile + "'");
             }
 
-            /*write the file*/
-            writeFile(endcontent,targetFile);
-
             inputStream.close();
-            //System.out.println("Read " + total + " bytes");
+
         }
         catch(FileNotFoundException ex) {
             System.out.println("Unable to open file '" + hufFile + "'");
@@ -120,8 +115,7 @@ public class Decode {
             System.out.println("Error reading file '" + hufFile + "'");
         }
 
-
-
+        /*END OF MAIN*/
     }
 
     /**
@@ -133,11 +127,9 @@ public class Decode {
         ArrayList<CharNode> nodeTable = new ArrayList<CharNode>();
         for(KeyTable n : pr){
             nodeTable.add(n.toCharNode());
-
         }
         int x = 0;
         CharNode root = recurseBuild(nodeTable,x);
-            //System.out.println(root.left.left.right.ch);
         return root;
     }
 
@@ -150,9 +142,6 @@ public class Decode {
      */
     public static CharNode recurseBuild(ArrayList<CharNode> pr, int depth){
 
-            //for (CharNode c : pr)
-            //    c.dumpData();
-            //System.out.println("\n");
         /* Checks if there is only 1 node left, if so it stops that recursive call*/
         if (pr.size() == 1) {
             return pr.get(0);
@@ -182,25 +171,5 @@ public class Decode {
 
         return head;
     }
-
-    /**
-     * This takes the translated bytes to string and writes the string to a file
-     * @param content the string to write
-     * @param targetFile the file to write to
-     */
-    public static void writeFile(String content,String targetFile){
-        try {
-            FileWriter fileWriter = new FileWriter(targetFile);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(content);
-            bufferedWriter.close();
-            System.out.println("Wrote " + content.length() + " bytes");
-        }
-        catch(IOException ex) {
-            System.out.println("Error writing file '"+ targetFile + "'");
-        }
-
-    }
-
 
 }

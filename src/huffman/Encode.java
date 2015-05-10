@@ -2,15 +2,11 @@ package huffman;
 /*
     Author: Matthew Musich
  */
-import com.intellij.openapi.vcs.history.VcsRevisionNumber;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Encode {
-
 
     /**
      * Main takes in the two args that will be sent from the console
@@ -27,6 +23,7 @@ public class Encode {
     public static void main(String[] args) {
 
         String sourceFile = args[0];
+        String targetFile = args[1];
         sourceFile = sourceFile.replace("\r","").replace("\n","");
 
         Map<Integer,Integer> charFreqs = checkCharFreq(sourceFile);
@@ -36,73 +33,50 @@ public class Encode {
         for(Integer key : charFreqs.keySet()){
             int i = key;
             char c = (char)i;
-                //System.out.println(key +":"+ charFreqs.get(key) + " =" + c );
+            //System.out.println(key +":"+ charFreqs.get(key) + " =" + c );
             pr.add(new CharNode(key, charFreqs.get(key),String.valueOf(c) , true));
         }
 
         /*builds the tree from the PRQUEUE and prints*/
         CharNode head = buildHuffTree(pr);
-            //System.out.println("Printing tree:\n");
+        //System.out.println("Printing tree:\n");
         head.printNodes(head,"-");
-
 
         /*gets all leaf nodes and prints the depth pairs*/
         HashMap<Integer,Integer> leaves = new HashMap<Integer,Integer>();
         leaves = getLeaves(head, leaves);
 
-            //System.out.println("\nCH : Depth");
-            //for(Integer key : leaves.keySet()) {
-            //    System.out.println(key.toString() + " : " + leaves.get(key).toString());
-            //}
-
         /*builds 2 key tables to store the combined data*/
         PriorityQueue<KeyTable> chAndDepth = new PriorityQueue<KeyTable>();
         PriorityQueue<KeyTable> chAndDepth2 = new PriorityQueue<KeyTable>();
-            //PriorityQueue<KeyTable> printpq = new PriorityQueue<KeyTable>();
+        //PriorityQueue<KeyTable> printpq = new PriorityQueue<KeyTable>();
         for(Integer key : leaves.keySet()) {
-                //System.out.println(key +":"+ charFreqs.get(key) + " =" + key );
+            //System.out.println(key +":"+ charFreqs.get(key) + " =" + key );
             chAndDepth.add(new KeyTable(key,leaves.get(key)));
             chAndDepth2.add(new KeyTable(key,leaves.get(key)));
-                //printpq.add(new KeyTable(key,leaves.get(key)));
+            //printpq.add(new KeyTable(key,leaves.get(key)));
         }
 
-            //prints/removes all from one of the PQs (FOR DEBUG)
-            //System.out.println("\nPQ CHECK");
-            //int si = printpq.size();
-            //for (int i=0; i < si; i++) {
-            //    System.out.println(printpq.poll());
-            //}
-
         /*Creates all of the Binary codes from the other PQ and sets it to a new PQ*/
-            //System.out.println("\nBINARY CHECK");
+        //System.out.println("\nBINARY CHECK");
         PriorityQueue<KeyTable> codedTable = createBinaryCodes(chAndDepth);
         PriorityQueue<KeyTable> codedTable2 = createBinaryCodes(chAndDepth2);
 
-
-        /*creates the header string*/
-        byte[] header = encodeHeader(codedTable);
-
-        /*creates the Hash for content encode*/
+        /*creates the Hash for content encode uses CodedTable2*/
         HashMap<Integer,String> codeHash = new HashMap<Integer,String>();
         int ctSize = codedTable2.size();
         for (int i=0; i < ctSize; i++) {
             KeyTable current = codedTable2.poll();
             codeHash.put(current.ch,current.code);
-                //System.out.println(current.ch+ ":"+current.code);
         }
 
-        /*creates the content String*/
-        byte[] content = encodeContent(sourceFile,codeHash);
+        /*creates the content in the text file*/
+        encodeContent(sourceFile,targetFile,codeHash,codedTable);
 
-
-        String targetFile = args[1];
-        writeHuf(header, content ,targetFile);
-
-        //writeContent(sourceFile,targetFile,codeHash);
-
-
-        /*End of Main*/
-        }
+        /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+        /* @@@@@@@@@@@End of Main@@@@@@@@@@@@@@@@@ */
+        /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+    }
 
     /**
      * takes in a file and the buffer reader will get each char and build a table
@@ -113,10 +87,7 @@ public class Encode {
     public static Map<Integer,Integer> checkCharFreq(String sourceFile){
 
         Map<Integer,Integer> charCount = new HashMap<Integer,Integer>();
-        //int sourceChar;
-        //String line = null;
         int r;
-
         /*create reader*/
         try {
             FileReader sourceReader = new FileReader(sourceFile);
@@ -166,7 +137,7 @@ public class Encode {
         int size = pr.size();
         CharNode root = null;
 
-        /* takes 2 lowest freqs and sets them as node children for a new parent and readd the parent to the pq*/
+        /* takes 2 lowest freqs and sets them as node children for a new parent and read the parent to the pq*/
         for (int i = 0; i < size-1; i++){
             CharNode l = pr.poll();
             CharNode r = pr.poll();
@@ -221,40 +192,16 @@ public class Encode {
                 code = code / 2; //right shift
             }
             sCode = String.format("%" + Integer.toString(current.depth) + "s", Integer.toBinaryString(code)).replace(' ', '0');
-                //System.out.println(current.ch + ":" + current.depth + ":" +sCode);
+            //System.out.println(current.ch + ":" + current.depth + ":" +sCode);
             current.code = sCode;
             pastDepth = current.depth;
             current.data = sCode.getBytes();
             btable.add(current);
-                //System.out.println(current.ch + ":" + current.depth + ":" +current.code);
+            //System.out.println(current.ch + ":" + current.depth + ":" +current.code);
         }
         return btable;
     }
 
-    /**
-     * takes the coded table and generates the header as a byte[]
-     * @param codedTable the PQ needed to get the info to build header
-     * @return a byte[] that contains the header of the file
-     */
-    public static byte[] encodeHeader(PriorityQueue<KeyTable> codedTable){
-
-        int ctSize = codedTable.size();
-        byte[] header = new byte[(ctSize *2)+1];
-        int bitLength = 8;
-            //header += String.format("%" + bitLength + "s", Integer.toBinaryString(ctSize)).replace(' ', '0');
-
-        /*adds the K value as count and the pairs of char and depth*/
-        byte count = (byte)ctSize;
-        header[0] = count;
-        int j = 1;
-        for (int i=0; i < ctSize; i++) {
-            KeyTable curr = codedTable.poll();
-            header[j] = (byte)curr.ch;
-            header[j+1] = (byte)curr.depth;
-           j += 2;
-        }
-        return header;
-    }
 
     /**
      * This takes in the source file to read again and a hashmap of references
@@ -263,78 +210,96 @@ public class Encode {
      * @param codeHash the table containing the chars and codes
      * @return
      */
-    public static byte[] encodeContent(String sourceFile,HashMap<Integer,String> codeHash){
+    public static void encodeContent(String sourceFile,String targetFile,HashMap<Integer,String> codeHash,PriorityQueue<KeyTable> codedTable){
         System.out.println("STARTING ENCODE");
-        String content = "";
         int r;
-        try {
-            FileReader sourceReader = new FileReader(sourceFile);
-            BufferedReader sourceBufferReader = new BufferedReader(sourceReader);
-            while((r = sourceBufferReader.read()) != -1){
-                content += codeHash.get(r);
-            }
-        }
-        catch(FileNotFoundException ex) {
-            System.out.println("Error: File " + sourceFile + "Not Found");
-        }
-        catch(IOException ex) {
-            System.out.println("Error: File " + sourceFile + "Cannot be Read");
-        }
-        content += codeHash.get(0); //add EOF
+        String builder = "";
 
-            //System.out.println(content);
-
-        /*adds 0s to the end to make divisible by 8 makes sure no straggle bits*/
-        int remain = content.length() % 8;
-        for(int i = 0; i < 8 - remain; i++){
-            content += "0";
-        }
-
-            // System.out.println(content);
-
-        String[] byteStrings = new String[(content.length()) / 8];
-        byte[] con = new byte[(content.length()) / 8];
-
-        /*create an array of bytes*/
-        int len = content.length();
-        int j = 0;
-        for (int i=0; i < len; i+=8){
-            byteStrings[j] = content.substring(i, Math.min(len, i + 8));
-                //con[j] = (byte) Integer.parseInt(content.substring(i, Math.min(len, i + 8)), 2);;
-            j++;
-        }
-
-            //System.out.println(Arrays.toString(byteStrings));
-
-        for (int i = 0; i < byteStrings.length; i++){
-                //String s  = byteStrings[i];
-            con[i] = (byte) Integer.parseInt(byteStrings[i], 2);
-
-        }
-
-            //System.out.println(Arrays.toString(con));
-
-
-        return con;
-    }
-
-
-    /**
-     * takes the header and content and writes them to a file in binary/hex
-     * 10:6 compression
-     * @param header
-     * @param content
-     * @param targetFile
-     */
-    public static void writeHuf(byte[] header, byte[] content,String targetFile){
         try {
 
             FileOutputStream outputStream = new FileOutputStream(targetFile);
+
+            int ctSize = codedTable.size();
+            byte[] header = new byte[(ctSize *2)+1];
+            int bitLength = 8;
+            //header += String.format("%" + bitLength + "s", Integer.toBinaryString(ctSize)).replace(' ', '0');
+
+            /*adds the K value as count and the pairs of char and depth*/
+            byte count = (byte)ctSize;
+            header[0] = count;
+            int j = 1;
+            for (int i=0; i < ctSize; i++) {
+                KeyTable curr = codedTable.poll();
+                header[j] = (byte)curr.ch;
+                header[j+1] = (byte)curr.depth;
+                j += 2;
+            }
             outputStream.write(header);
-            //outputStream.write(System.getProperty("line.separator").getBytes());
-            outputStream.write(content);
+
+
+
+            try {
+                FileReader sourceReader = new FileReader(sourceFile);
+                BufferedReader sourceBufferReader = new BufferedReader(sourceReader);
+
+                while((r = sourceBufferReader.read()) != -1){
+                    String code = codeHash.get(r);
+
+                    if (builder.length() > 8){
+                        String[] split = builder.split("(?<=\\G.{" + 8 + "})");
+                        String sender = split[0];
+                        builder = split[1];
+
+                        //System.out.println(sender);
+                        //write sender
+                        byte b = (byte) Integer.parseInt(sender, 2);
+                        outputStream.write(b);
+
+                    }
+                    builder += code;
+
+                }
+
+                System.out.println(builder);
+                builder += codeHash.get(0);
+                System.out.println(builder);
+
+                if (builder.length() > 8){
+                    String[] split = builder.split("(?<=\\G.{" + 8 + "})");
+                    String sender = split[0];
+                    builder = split[1];
+
+                    //write sender
+                    byte b = (byte) Integer.parseInt(sender, 2);
+                    outputStream.write(b);
+
+                    /*adds 0s to the end to make divisible by 8 makes sure no straggle bits*/
+                    int remain = builder.length() % 8;
+                    if (remain > 0 ){
+                        for(int i = 0; i < 8 - remain; i++){
+                            builder += "0";
+                        }
+
+                        byte bu = (byte) Integer.parseInt(builder, 2);
+                        outputStream.write(bu);
+                    }
+                } else {
+                    byte b = (byte) Integer.parseInt(builder, 2);
+                    outputStream.write(b);
+                }
+
+
+
+            }
+            catch(FileNotFoundException ex) {
+                System.out.println("Error: File " + sourceFile + "Not Found");
+            }
+            catch(IOException ex) {
+                System.out.println("Error: File " + sourceFile + "Cannot be Read");
+            }
+
             outputStream.close();
-            System.out.println("Wrote " + (header.length + content.length) + " bytes");
+
         }
         catch(IOException ex) {
             System.out.println("Error writing file '"+ targetFile + "'");
